@@ -33,7 +33,7 @@ const app = {
             api: 'https://api.aniapi.com/v1/anime?genres=Fantasy&nsfw=true'
         },
         {
-            api: 'https://api.aniapi.com/v1/anime?genres=Pirates&nsfw=true'
+            api: 'https://api.aniapi.com/v1/anime?genres=Slice%20of%20Life&nsfw=true'
         },
         {
             api: 'https://api.aniapi.com/v1/anime?genres=Shounen&nsfw=true'
