@@ -356,6 +356,7 @@ html {
     display: flex;
     align-items: center;
     height: 30px;
+    transition: all 0.5s ease;
 }
 
 .body-selection__item.active {
@@ -379,6 +380,7 @@ html {
     background-position: center;
     background-size: cover;
     display: block;
+    animation: appear 0.2s ease-in-out;
 }
 
 .box-anime:hover {
@@ -413,15 +415,54 @@ html {
     margin-bottom: 6px;
 }
 
+/* footer */
+.footer {
+    height: 50px;
+    background-color: #000000;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.footer div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
+.footer-text {
+    color: #fff;
+    font-size: 1.2rem;
+}
 
+/* loading filter */
+.filter-loading {
+    background-color: rgba(0, 0, 0, 0.575);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 99;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
 
-
-
-
-
-
+.filter-loading i {
+    color: #fff;
+    font-size: 5rem;
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    /* transform: rotate(3deg); */
+    /* transform: rotate(0.3rad);/ */
+    /* transform: rotate(3grad); */
+    /* transform: rotate(.03turn);  */
+}
 
 
 

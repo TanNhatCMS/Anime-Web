@@ -9,6 +9,7 @@ const box = document.querySelector('.body-popular__item')
 const boxContainer = document.querySelector('.row.main-body')
 const bodySelections = document.querySelector('.body-selection')
 const selectItems = document.querySelectorAll('.body-selection__item')
+const filterLoading = document.querySelector('.filter-loading')
 
 const app = {
     currentIndex: 0,
@@ -115,7 +116,11 @@ const app = {
     eventsHandle: function () {
         for (var i = 0; i < 9; i++) {
             selectItems[i].onclick = (e) => {
+                filterLoading.style.display = 'flex'
+                boxContainer.innerHTML = ''
+                selectItems[this.currentIndex].classList.remove('active')
                 this.currentIndex = e.target.attributes.index.value
+                selectItems[this.currentIndex].classList.add('active')
                 this.boxRenderer()
             }
         }
@@ -170,6 +175,9 @@ const app = {
         boxHandle
             .then((data) => {
                 this.renderBox(data)
+            })
+            .then((data) => {
+                filterLoading.style.display = 'none'
             })
     },
 
