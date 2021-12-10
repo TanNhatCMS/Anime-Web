@@ -2,18 +2,48 @@ const firstAPI = 'https://api.aniapi.com/v1/anime'
 const moveSlide = document.querySelector('.body-popular__slide-move')
 const nextIcon = document.querySelector('.nav-slider-left')
 const prevIcon = document.querySelector('.nav-slider-right')
+const navBtn = document.querySelectorAll('.nav-slider-btn')
+const loading = document.querySelector('.loading')
+const boxFilter = document.querySelector('.body-popular__item-filter')
+const box = document.querySelector('.body-popular__item')
 
 const app = {
     renderFirstSlide: function (data) {
+        let status
         let animes = data
         htmls = animes.data.documents.map((anime, index) => {
+            switch (anime.status) {
+                case 0:
+                    status = 'Finished'
+                    break;
+                case 1:
+                    status = 'Releasing'
+                    break;
+                case 2:
+                    status = 'Not yet released'
+                    break;
+                case 3:
+                    status = 'Cancelled'
+            }
             if (index < 25) {
                 return `
-                    <div class="item body-popular__item" style="background-image: url(${anime.cover_image})"></div>                  
+                    <a href="" class='body-popular__link'>
+                        <div class="item body-popular__item" style="background-image: url(${anime.cover_image})">
+                            <div class="body-popular__item-filter">
+                                <i class="fas fa-play-circle"></i>
+                                <span class="body-popular__item-filter__name">${anime.titles.en}</span>
+                                <span class="body-popular__item-filter__status">${status}</span>
+                            </div>
+                        </div>    
+                    </a>              
                 `
             }
         }).join('')
         moveSlide.innerHTML = htmls
+    },
+
+    eventsHandle: function () {
+        
     },
 
     start: function () {
@@ -26,6 +56,12 @@ const app = {
         slideHandle1
             .then((data) => {
                 this.renderFirstSlide(data)
+            })
+            .then(() => {
+                for (let i = 0; i < 2; i++) {
+                    navBtn[i].style.display = 'flex'
+                }
+                loading.style.display = 'none'
             })
             .then(() => {
                 $('.owl-carousel').owlCarousel({
