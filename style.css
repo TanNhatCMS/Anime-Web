@@ -44,7 +44,7 @@ html {
     height: 56px;
     overflow: hidden;
     background-color: var(--black-color);
-    display: none;
+    /* display: none; */
 }
 
 .header-c {
