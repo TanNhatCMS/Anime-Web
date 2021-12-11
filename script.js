@@ -127,7 +127,7 @@ const app = {
     
         document.onclick = (e) => {
             if (e.target.classList.contains("anime-item")) {
-                localStorage.currentId = e.target.attributes.animeid.value
+                localStorage.currentId = Number(e.target.attributes.animeid.value)
             }
         }
 

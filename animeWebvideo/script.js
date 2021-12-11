@@ -6,11 +6,14 @@ const animeStatus = document.querySelector('.animeinfo-status')
 const animeSeason = document.querySelector('.animeinfo-season')
 const animeDescription = document.querySelector('.animeinfo-des')
 const totalEp = document.querySelector('.ep-nav__bottom--ep')
+const epList = document.querySelector('.ep-list')
+const subteam = document.querySelectorAll('.subteam-options')
+let epItems
 const languageOptions = document.querySelectorAll('.animeinfo-option__list span')
-let currentLanguage = 'dreamsub'
+let currentSubteam = 'dreamsub'
 let currentLocale = "it"
 let currentEpisode = 1
-let currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}&locale=${currentLocale}`
+let currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentSubteam}&locale=${currentLocale}`
 
 const video = document.querySelector('.video')
 
@@ -22,12 +25,20 @@ app = {
             .then(data => this.renderAnime(data))
     },
 
+    handleAnime: function (data) {
+        animeObj = data
+        if (animeObj.data = "") {
+            console.error("Anime")
+        }
+    },
+
     renderAnime: function (data) {
         const animeObj = data
         let status
         let season
         let year = animeObj.data.season_year
         let descriptions = animeObj.data.descriptions.en
+        let animeEPTotal = animeObj.data.episodes_count
         if (animeObj.data.descriptions.en === "") {
             descriptions = animeObj.data.descriptions.it
         }
@@ -73,10 +84,19 @@ app = {
         animeStatus.innerHTML = 'Status:' + '&nbsp'+ status
         animeSeason.innerHTML = 'Season:' + '&nbsp'+ season + '&nbsp' +year
         animeDescription.innerHTML = descriptions
-        totalEp.innerHTML = animeObj.data.episodes_count + '&nbsp'+ 'episodes in total'
+        totalEp.innerHTML = animeEPTotal + '&nbsp'+ 'episodes in total';
+        for (var i = 0; i < animeEPTotal; i++) {
+            var listItem = document.createElement("li")
+            listItem.className = `ep-item ep-${i + 1}`
+            listItem.innerHTML = `episode ${i + 1}`
+            epList.appendChild(listItem)
+        }
+        epItems = document.querySelectorAll('.ep-item')
+        epItems[currentEpisode - 1].classList.add('active')
     },
 
     getVideo: function () {
+        this.getCurrentVideoApi()
         fetch(currentVideoApi) 
             .then(res => res.json())
             .then(data => this.renderVideo(data))
@@ -84,32 +104,102 @@ app = {
 
     renderVideo: function (data) {
         animeObj = data
-        console.log(animeObj.data)
-        video.attributes.src.value = animeObj.data.documents[0].video
-        console.log(animeObj.data.documents[0].video)
+        if (animeObj.data == "") {
+            video.setAttribute('poster','../assets/404.png')
+        }
+        else {
+            video.setAttribute('poster','../assets/loading.png')
+            video.attributes.src.value = animeObj.data.documents[0].video
+        }
     },
 
     eventsHandle: function () {
         languageOptions[0].onclick = () =>{
             languageOptions[0].classList.add('active');
             languageOptions[1].classList.remove('active');
-            currentLanguage = 'gogoanime'
-            currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}`
+            currentLocale = 'en'
+            currentSubteam = 'gogoanime'
+            subteam[2].click()
+            for (var i = 0; i < 3; i++) {
+                if (subteam[i].textContent.trim() !== 'gogoanime') {
+                    subteam[i].classList.add('hide')
+                }
+                else {
+                    subteam[i].classList.remove('hide')
+                }
+            }
             this.getVideo()
         }
         languageOptions[1].onclick = () =>{
             languageOptions[1].classList.add('active');
             languageOptions[0].classList.remove('active');
-            currentLanguage = 'dreamsub'
-            currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}`
+            currentLocale = 'it'
+            currentSubteam = 'dreamsub'
+            subteam[0].click()
+            for (var i = 0; i < 3; i++) {
+                if (subteam[i].textContent.trim() === 'gogoanime') {
+                    subteam[i].classList.add('hide')
+                }
+                else {
+                    subteam[i].classList.remove('hide')
+                }
+            }
             this.getVideo()
         }
+
+        document.onclick = (e) => {
+            if (e.target.classList.contains('ep-item')) {
+                epItems[currentEpisode - 1].classList.remove('active')
+                currentEpisode = Number(e.target.classList[1].slice(3)) 
+                epItems[currentEpisode - 1].classList.add('active')
+                document.querySelector('.ep-nav__bottom--currentep').innerHTML = 'Current ep:' + '&nbsp' + currentEpisode
+                this.getVideo()
+            }
+        }
+
+        for (var i = 0; i < 3; i++) {
+            subteam[i].onclick = (e) => {
+                currentSubteam = e.target.outerText.trim()
+                console.log(currentVideoApi)
+                this.getVideo()
+            }
+        }
+
+        video.addEventListener('error', () => {
+            video.setAttribute('poster','../assets/500.png')
+        })
+    },
+
+    chooseSubHandler: function () {
+        subteam[0].addEventListener('click',() => {
+            subteam[0].classList.add('active')
+            subteam[1].classList.remove('active')
+            subteam[2].classList.remove('active')
+        }
+    )
+        subteam[1].addEventListener('click',() => {
+            subteam[1].classList.add('active')
+            subteam[2].classList.remove('active')
+            subteam[0].classList.remove('active')
+        }
+    )
+        subteam[2].addEventListener('click',() => {
+            subteam[2].classList.add('active')
+            subteam[0].classList.remove('active')
+            subteam[1].classList.remove('active')
+        }
+    )
+    },
+
+    getCurrentVideoApi: function () {
+        currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentSubteam}&locale=${currentLocale}`
     },
 
     start: function () {
         this.getAnimeData()
         this.eventsHandle()
         this.getVideo()
+        this.chooseSubHandler()
     }
 }
 

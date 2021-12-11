@@ -696,6 +696,28 @@ html {
     color: var(--primary-color);
 }
 
+.animeinfo-option__subteam  {
+    margin-top: 6px;
+}
+
+.animeinfo-option__subteam span {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.animeinfo-option__subteam span:hover{
+    cursor: pointer;
+}
+
+.animeinfo-option__subteam span.active {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.hide {
+    display: none;
+}
+
 /* animation */
 @keyframes appear {
     0% {
