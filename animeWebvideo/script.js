@@ -6,6 +6,13 @@ const animeStatus = document.querySelector('.animeinfo-status')
 const animeSeason = document.querySelector('.animeinfo-season')
 const animeDescription = document.querySelector('.animeinfo-des')
 const totalEp = document.querySelector('.ep-nav__bottom--ep')
+const languageOptions = document.querySelectorAll('.animeinfo-option__list span')
+let currentLanguage = 'dreamsub'
+let currentLocale = "it"
+let currentEpisode = 1
+let currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}&locale=${currentLocale}`
+
+const video = document.querySelector('.video')
 
 app = {
     currentEp: 1,
@@ -69,9 +76,40 @@ app = {
         totalEp.innerHTML = animeObj.data.episodes_count + '&nbsp'+ 'episodes in total'
     },
 
+    getVideo: function () {
+        fetch(currentVideoApi) 
+            .then(res => res.json())
+            .then(data => this.renderVideo(data))
+    },
+
+    renderVideo: function (data) {
+        animeObj = data
+        console.log(animeObj.data)
+        video.attributes.src.value = animeObj.data.documents[0].video
+        console.log(animeObj.data.documents[0].video)
+    },
+
+    eventsHandle: function () {
+        languageOptions[0].onclick = () =>{
+            languageOptions[0].classList.add('active');
+            languageOptions[1].classList.remove('active');
+            currentLanguage = 'gogoanime'
+            currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}`
+            this.getVideo()
+        }
+        languageOptions[1].onclick = () =>{
+            languageOptions[1].classList.add('active');
+            languageOptions[0].classList.remove('active');
+            currentLanguage = 'dreamsub'
+            currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentLanguage}`
+            this.getVideo()
+        }
+    },
 
     start: function () {
         this.getAnimeData()
+        this.eventsHandle()
+        this.getVideo()
     }
 }
 

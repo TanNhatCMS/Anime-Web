@@ -673,22 +673,28 @@ html {
     margin-top: 10px;
 }
 
-.animeinfo-genres {
-
+.animeinfo-option {
+    margin-top: -30px;
+    margin-bottom: 20px;
 }
 
-.animeinfo-status {
-
+.animeinfo-option span{
+    color: #fff;
+    font-size: 1.6rem;
+}
+.animeinfo-option__list span{
+    font-size: 1.2rem;
+    margin-right: 10px;
 }
 
-.animeinfo-season {
-
+.animeinfo-option__list span:hover{
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
-.animeinfo-des {
-
+.animeinfo-option__list span.active {
+    color: var(--primary-color);
 }
-
 
 /* animation */
 @keyframes appear {
