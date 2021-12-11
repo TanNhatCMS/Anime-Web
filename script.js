@@ -64,7 +64,7 @@ const app = {
                 return `
                 <a href="./animeWebvideo/index.html" class='body-popular__link'>
                 <div class="item body-popular__item anime-item" animeid="${anime.id}" style="background-image: url(${anime.cover_image})">
-                    <div class="body-popular__item-filter">
+                    <div class="body-popular__item-filter anime-item" animeid="${anime.id}">
                         <i class="fas fa-play-circle"></i>
                         <span class="body-popular__item-filter__name">${anime.titles.en}</span>
                         <span class="body-popular__item-filter__status">${status}</span>
@@ -130,7 +130,7 @@ const app = {
                 localStorage.currentId = e.target.attributes.animeid.value
             }
         }
-    
+
     },
 
     slideRender: function () {
