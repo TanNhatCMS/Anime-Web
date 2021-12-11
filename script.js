@@ -62,15 +62,15 @@ const app = {
             }
             if (index < 25) {
                 return `
-                    <a href="" class='body-popular__link'>
-                        <div class="item body-popular__item" style="background-image: url(${anime.cover_image})">
-                            <div class="body-popular__item-filter">
-                                <i class="fas fa-play-circle"></i>
-                                <span class="body-popular__item-filter__name">${anime.titles.en}</span>
-                                <span class="body-popular__item-filter__status">${status}</span>
-                            </div>
-                        </div>    
-                    </a>              
+                <a href="./animeWebvideo/index.html" class='body-popular__link'>
+                <div class="item body-popular__item anime-item" animeid="${anime.id}" style="background-image: url(${anime.cover_image})">
+                    <div class="body-popular__item-filter">
+                        <i class="fas fa-play-circle"></i>
+                        <span class="body-popular__item-filter__name">${anime.titles.en}</span>
+                        <span class="body-popular__item-filter__status">${status}</span>
+                    </div>
+                </div>    
+            </a>                     
                 `
             }
         }).join('')
@@ -96,8 +96,8 @@ const app = {
             }
             return `
                 <div class="col c-2-4">
-                    <a href="" class="box-anime" style="background-image: url(${anime.cover_image});">
-                        <div class="box-anime__filter">
+                    <a href="./animeWebvideo/index.html" class="box-anime" style="background-image: url(${anime.cover_image});" animeid="${anime.id}">
+                        <div class="box-anime__filter anime-item" animeid="${anime.id}">
                             <span class="box-anime__name">
                                 ${anime.titles.en}
                             </span>
@@ -114,7 +114,7 @@ const app = {
     },
 
     eventsHandle: function () {
-        for (var i = 0; i < 9; i++) {
+        for (let i = 0; i < 9; i++) {
             selectItems[i].onclick = (e) => {
                 filterLoading.style.display = 'flex'
                 boxContainer.innerHTML = ''
@@ -124,6 +124,13 @@ const app = {
                 this.boxRenderer()
             }
         }
+    
+        document.onclick = (e) => {
+            if (e.target.classList.contains("anime-item")) {
+                localStorage.currentId = e.target.attributes.animeid.value
+            }
+        }
+    
     },
 
     slideRender: function () {
@@ -176,7 +183,7 @@ const app = {
             .then((data) => {
                 this.renderBox(data)
             })
-            .then((data) => {
+            .then(() => {
                 filterLoading.style.display = 'none'
             })
     },
