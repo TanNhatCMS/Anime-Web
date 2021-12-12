@@ -14,7 +14,7 @@ const appBase = {
             menuFilter.style.display = 'none'
             menuNav.style.width = '0'
         }
-
+        
         document.onmousedown = (e) => {
             if (e.target.classList.contains('random-link')) {
                 localStorage.currentId = localStorage.randomId
