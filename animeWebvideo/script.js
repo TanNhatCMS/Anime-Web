@@ -14,6 +14,9 @@ let currentSubteam = 'dreamsub'
 let currentLocale = "it"
 let currentEpisode = 1
 let currentVideoApi = `https://api.aniapi.com/v1/episode?anime_id=${currentAnimeId}&number=${currentEpisode}&source=${currentSubteam}&locale=${currentLocale}`
+const menuBtn = document.querySelector('.bx-menu')
+const menuFilter = document.querySelector('.menu-filter')
+const menuNav = document.querySelector('.menu-nav')
 
 const video = document.querySelector('.video')
 
@@ -23,13 +26,6 @@ app = {
         fetch(currentAnimeApi)
             .then(res => res.json())
             .then(data => this.renderAnime(data))
-    },
-
-    handleAnime: function (data) {
-        animeObj = data
-        if (animeObj.data = "") {
-            console.error("Anime")
-        }
     },
 
     renderAnime: function (data) {
@@ -104,6 +100,7 @@ app = {
 
     renderVideo: function (data) {
         animeObj = data
+        console.log(animeObj)
         if (animeObj.data == "") {
             video.setAttribute('poster','../assets/404.png')
         }
@@ -168,6 +165,16 @@ app = {
         video.addEventListener('error', () => {
             video.setAttribute('poster','../assets/500.png')
         })
+
+        menuBtn.onclick = () => {
+            menuFilter.style.display = 'block'
+            menuNav.style.width = '50%'
+        }
+
+        menuFilter.onclick = () => {
+            menuFilter.style.display = 'none'
+            menuNav.style.width = '0'
+        }
     },
 
     chooseSubHandler: function () {

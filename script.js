@@ -10,6 +10,9 @@ const boxContainer = document.querySelector('.row.main-body')
 const bodySelections = document.querySelector('.body-selection')
 const selectItems = document.querySelectorAll('.body-selection__item')
 const filterLoading = document.querySelector('.filter-loading')
+const menuBtn = document.querySelector('.bx-menu')
+const menuFilter = document.querySelector('.menu-filter')
+const menuNav = document.querySelector('.menu-nav')
 
 const app = {
     currentIndex: 0,
@@ -95,7 +98,7 @@ const app = {
                     status = 'Cancelled'
             }
             return `
-                <div class="col c-2-4">
+                <div class="col c-2-4 s-6">
                     <a href="./animeWebvideo/index.html" class="box-anime" style="background-image: url(${anime.cover_image});" animeid="${anime.id}">
                         <div class="box-anime__filter anime-item" animeid="${anime.id}">
                             <span class="box-anime__name">
@@ -131,6 +134,16 @@ const app = {
             }
         }
 
+
+        menuBtn.onclick = () => {
+            menuFilter.style.display = 'block'
+            menuNav.style.width = '50%'
+        }
+
+        menuFilter.onclick = () => {
+            menuFilter.style.display = 'none'
+            menuNav.style.width = '0'
+        }
     },
 
     slideRender: function () {
@@ -158,7 +171,7 @@ const app = {
                     dots: false,
                     responsive: {
                         0: {
-                            items: 1
+                            items: 2
                         },
                         600: {
                             items: 3
