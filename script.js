@@ -10,9 +10,6 @@ const boxContainer = document.querySelector('.row.main-body')
 const bodySelections = document.querySelector('.body-selection')
 const selectItems = document.querySelectorAll('.body-selection__item')
 const filterLoading = document.querySelector('.filter-loading')
-const menuBtn = document.querySelector('.bx-menu')
-const menuFilter = document.querySelector('.menu-filter')
-const menuNav = document.querySelector('.menu-nav')
 
 const app = {
     currentIndex: 0,
@@ -133,17 +130,6 @@ const app = {
                 localStorage.currentId = Number(e.target.attributes.animeid.value)
             }
         }
-
-
-        menuBtn.onclick = () => {
-            menuFilter.style.display = 'block'
-            menuNav.style.width = '50%'
-        }
-
-        menuFilter.onclick = () => {
-            menuFilter.style.display = 'none'
-            menuNav.style.width = '0'
-        }
     },
 
     slideRender: function () {
@@ -163,7 +149,7 @@ const app = {
             .then(() => {
                 $('.owl-carousel').owlCarousel({
                     loop: true,
-                    margin: 10,
+                    margin: -10,
                     nav: false,
                     autoplay: true,
                     autoplayTimeout: 2000,
