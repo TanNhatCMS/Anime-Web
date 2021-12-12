@@ -130,6 +130,12 @@ const app = {
                 localStorage.currentId = Number(e.target.attributes.animeid.value)
             }
         }
+
+        
+
+        
+            
+        
     },
 
     slideRender: function () {

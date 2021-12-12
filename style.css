@@ -48,7 +48,6 @@ html {
     left: 0;
     right: 0;
     height: 56px;
-    overflow: hidden;
     background-color: var(--black-color);
     z-index: 50;
     display: flex;
@@ -124,6 +123,82 @@ html {
 
 .header-interact-search {
     position: relative;
+}
+
+.header-interact-search__list {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #202020;
+    z-index: 30;
+    width: 400px;
+    height: fit-content;
+    padding: 10px;
+    padding-bottom: 0;
+    border-radius: 5px;
+    box-shadow: 4px 4px 6px rgba(85, 84, 84, 0.5);
+    display: none;
+    animation: appear 0.1s ease-in;
+}
+
+.header-interact-search__item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(156, 156, 156);
+    transition: all 0.1s ease-in;
+}
+
+.header-interact-search__item-link {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+}
+
+.header-interact-search__item:hover {
+    transform: scale(103%);
+    cursor: pointer;
+}
+
+.header-interact-search__item:hover .header-interact-search__item-name {
+    color: var(--primary-color);
+}
+
+.header-interact-search__item:last-child {
+    border-bottom: none;
+    padding-bottom: none;
+}
+
+.header-interact-search__item-img {
+    height: 80px;
+    border-radius: 5px;
+}
+
+.search__item-contain {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.header-interact-search__item-name {
+    font-size: 1.7rem;
+    text-overflow: hidden;
+    overflow: hidden;
+    display: block;
+    line-height: 2rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    color: #fff;
+    transition: color 0.1s ease-in;
+}
+
+.header-interact-search__item-status {
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    color: #bec1c2;
 }
 
 .header-interact__item-search:focus {
@@ -264,8 +339,6 @@ html {
 .body-popular__item:first-child {
     margin-left: 0;
 }
-
-.body-popular__slide-move {}
 
 .body-nav {
     position: absolute;
@@ -553,7 +626,7 @@ html {
     padding-bottom: 4px;
     margin-top: 10px;
     white-space: nowrap;
-    overflow: hidden;  
+    overflow: hidden;
     text-overflow: ellipsis;
     padding-left: 10px;
 }
@@ -615,7 +688,7 @@ html {
     color: #fff;
 }
 
-.animeinfo-interact {   
+.animeinfo-interact {
     display: flex;
     margin-top: 20px;
 }
@@ -699,16 +772,17 @@ html {
     margin-bottom: 20px;
 }
 
-.animeinfo-option span{
+.animeinfo-option span {
     color: #fff;
     font-size: 1.6rem;
 }
-.animeinfo-option__list span{
+
+.animeinfo-option__list span {
     font-size: 1.2rem;
     margin-right: 10px;
 }
 
-.animeinfo-option__list span:hover{
+.animeinfo-option__list span:hover {
     font-size: 1.2rem;
     cursor: pointer;
 }
@@ -717,7 +791,7 @@ html {
     color: var(--primary-color);
 }
 
-.animeinfo-option__subteam  {
+.animeinfo-option__subteam {
     margin-top: 6px;
 }
 
@@ -726,7 +800,7 @@ html {
     margin-right: 10px;
 }
 
-.animeinfo-option__subteam span:hover{
+.animeinfo-option__subteam span:hover {
     cursor: pointer;
 }
 
@@ -774,7 +848,7 @@ html {
     padding: 10px 0;
 }
 
-.menu-nav__item a{
+.menu-nav__item a {
     font-size: 1.6rem;
     color: #000;
     display: flex;
@@ -783,13 +857,13 @@ html {
     white-space: nowrap;
 }
 
-.menu-nav__item i{
+.menu-nav__item i {
     font-size: 2.2rem;
     color: #000;
     margin-right: 10px;
 }
 
-.menu-nav__item img{
+.menu-nav__item img {
     margin-right: 10px;
 }
 
@@ -799,7 +873,7 @@ html {
     align-items: center;
 }
 
-.menu-nav__item:last-child a{
+.menu-nav__item:last-child a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -824,8 +898,10 @@ html {
     width: 100%;
     height: 300px;
     overflow: scroll;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
     padding: 10px 0;
@@ -875,6 +951,7 @@ html {
     0% {
         transform: scaleY(0%)
     }
+
     100% {
         transform: scaleY(100%)
     }
@@ -924,5 +1001,10 @@ html {
 
     .r2-nav {
         height: 250px;
+    }
+
+    .header-interact-search__list {
+        width: 350px;
+        right: -120px;
     }
 }
