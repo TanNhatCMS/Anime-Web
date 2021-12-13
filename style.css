@@ -132,13 +132,14 @@ html {
     background-color: #202020;
     z-index: 30;
     width: 400px;
-    height: fit-content;
+    min-height: 400px;
     padding: 10px;
     padding-bottom: 0;
     border-radius: 5px;
     box-shadow: 4px 4px 6px rgba(85, 84, 84, 0.5);
     display: none;
-    animation: appear 0.1s ease-in;
+    animation: scaleY 0.2s ease-in-out;
+    transform-origin: calc(100% - 22px) 0%;
 }
 
 .header-interact-search__item {
@@ -147,7 +148,7 @@ html {
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgb(156, 156, 156);
-    transition: all 0.1s ease-in;
+    animation: appear 0.2s linear;
 }
 
 .header-interact-search__item-link {
@@ -948,12 +949,22 @@ html {
 }
 
 @keyframes scaleY {
-    0% {
+    from {
         transform: scaleY(0%)
     }
 
-    100% {
+    to {
         transform: scaleY(100%)
+    }
+}
+
+@keyframes scaleY2 {
+    from {
+        transform: scaleY(100%)
+    }
+
+    to {
+        transform: scaleY(0%)
     }
 }
 

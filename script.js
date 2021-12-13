@@ -10,6 +10,11 @@ const boxContainer = document.querySelector('.row.main-body')
 const bodySelections = document.querySelector('.body-selection')
 const selectItems = document.querySelectorAll('.body-selection__item')
 const filterLoading = document.querySelector('.filter-loading')
+const searchBox = document.querySelector('.header-interact__item-search')
+const searchList = document.querySelector('.header-interact-search__list')
+let searchItems
+let currentSearchValue
+let currentSearchApi
 
 const app = {
     currentIndex: 0,
@@ -131,11 +136,118 @@ const app = {
             }
         }
 
-        
+        searchBox.onfocus = () => {
+            searchList.style.display = "block"
+        }
 
-        
+        searchBox.onkeypress = () => {
+            setTimeout(() => {
+                if (searchBox.value !== currentSearchValue) {
+                    currentSearchValue = searchBox.value.split(' ').join('%20')
+                    console.log(currentSearchValue)
+                    currentSearchApi = `https://api.aniapi.com/v1/anime?title=${currentSearchValue}&nsfw=true`
+                    this.getSearchAnime()
+                }
+            },500)
+        }
+
+        document.addEventListener('mousedown', (e) => {
+            if (!(e.target.classList.contains('search-unhide'))) {
+                searchList.style.display = "none"
+                searchBox.blur()
+            }
+        })
             
-        
+        document.onkeydown = (e) => {
+            if (e.keyCode === 27) {
+                searchList.style.display = "none"
+                searchBox.blur()
+            }
+        }
+
+        document.addEventListener("keydown", (e) => {
+            setTimeout(() => {
+                if (e.keyCode === 8) {
+                    if (searchBox.value === '') {
+                        searchList.innerHTML = '<img class="waiting-for-search search-unhide" src="assets/83223258-unscreen.gif" alt="">'
+                    }
+                }
+            },500)
+        })
+    },
+
+    getSearchAnime: function () {
+        fetch(currentSearchApi)
+            .then(res => res.json())
+            .then(data => this.renderSearchAnime(data))
+    },
+
+    renderSearchAnime: function (data) {
+        let status
+        let season
+        animeObj = data
+        htmls = animeObj.data.documents.map((anime, index) => {
+            if (index < 10) {
+                switch (anime.status) {
+                    case 0:
+                        status = 'Finished'
+                        break;
+                    case 1:
+                        status = 'Releasing'
+                        break;
+                    case 2:
+                        status = 'Not yet released'
+                        break;
+                    case 3:
+                        status = 'Cancelled'
+                }
+    
+                switch (anime.season_period) {
+                    case 0:
+                        season = 'Winter'
+                        break;
+                    case 1:
+                        season = 'Spring'
+                        break;
+                    case 2:
+                        season = 'Summer'
+                        break;
+                    case 3:
+                        season = 'Fall'
+                        break;
+                    case 4:
+                        season = ''
+                }
+    
+                return `
+                    <li class="header-interact-search__item search-unhide" aniID='${anime.id}'>
+                    <a href="./animeWebvideo/index.html" class="header-interact-search__item-link search-unhide" aniID='${anime.id}'>
+                        <img class="header-interact-search__item-img search-unhide" src="${anime.cover_image}" alt="" aniID='${anime.id}'>
+                        <div class="search__item-contain search-unhide" aniID='${anime.id}'>
+                            <span class="header-interact-search__item-name search-unhide" aniID='${anime.id}'>
+                                ${anime.titles.en}
+                            </span>
+                            <span class="header-interact-search__item-status search-unhide" aniID='${anime.id}'>
+                                <span class="search__item-status__status search-unhide" aniID='${anime.id}'>
+                                    ${status}
+                                </span>
+                                <span class="search__item-status__season search-unhide" aniID='${anime.id}'>
+                                    ${season + '&nbsp'+ anime.season_year}
+                                </span>
+                            </span>
+                        </div>
+                        </a>
+                    </li>
+                `   
+            }
+        }).join('')
+        searchList.innerHTML = htmls
+        searchItems = document.querySelectorAll('.header-interact-search__item')
+        for (let i = 0; i < 10; i++) {
+            searchItems[i].onclick = (e) => {
+                localStorage.currentId = e.target.attributes.aniId.value
+            }
+        }
     },
 
     slideRender: function () {
