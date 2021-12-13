@@ -172,7 +172,7 @@ app = {
             searchList.style.display = "block"
         }
 
-        searchBox.onkeypress = () => {
+        searchBox.onkeydown = () => {
             setTimeout(() => {
                 if (searchBox.value !== currentSearchValue) {
                     currentSearchValue = searchBox.value.split(' ').join('%20')
