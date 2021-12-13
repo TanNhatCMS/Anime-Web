@@ -968,6 +968,26 @@ html {
     }
 }
 
+@media (min-width: 1024px) and (max-width: 1239px) {
+    .header-categories {
+        display: none;
+    }
+
+    .header-interact__item:nth-child(3) {
+        display: block;
+    }
+}
+
+@media (min-width: 740px) and (max-width: 1023px) {
+    .header-categories {
+        display: none;
+    }
+
+    .header-interact__item:nth-child(3) {
+        display: block;
+    }
+}
+
 @media (max-width: 768px) {
     .body-spotlight {
         display: none !important;
