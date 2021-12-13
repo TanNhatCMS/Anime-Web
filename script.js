@@ -1,5 +1,6 @@
 const firstAPI = 'https://api.aniapi.com/v1/anime'
 const secondAPI = 'https://api.aniapi.com/v1/anime?genres=Romance,comedy&nsfw=true'
+const bannerBtn = document.querySelector('.body-spotlight__detail-btn')
 const moveSlide = document.querySelector('.body-popular__slide-move')
 const nextIcon = document.querySelector('.nav-slider-left1')
 const prevIcon = document.querySelector('.nav-slider-right1')
@@ -174,6 +175,10 @@ const app = {
                 }
             },500)
         })
+
+        bannerBtn.onclick = () => {
+            localStorage.currentId = 5401
+        }
     },
 
     getSearchAnime: function () {
