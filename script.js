@@ -177,7 +177,7 @@ const app = {
         })
 
         bannerBtn.onclick = () => {
-            localStorage.currentId = 5401
+            localStorage.currentId = 2273
         }
     },
 
